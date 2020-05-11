@@ -28,8 +28,8 @@ namespace DatingApp.API
         public void ConfigureServices(IServiceCollection services)
         {
            services.AddDbContext<DataContext>(x => x.UseSqlite
-           (Configuration.GetConnectionString("DefaultConnection")));
-            services.AddControllers();
+           (Configuration.GetConnectionString("DefaultConnection")));//services such as the DB context must be registered with the dependency injection (DI) container. 
+            services.AddControllers();                                // The container provides the service to controllers.
             services.AddCors();
         }
 
