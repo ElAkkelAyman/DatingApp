@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using DatingApp.API.Data;
 
 namespace DatingApp.API
 {
@@ -31,6 +32,7 @@ namespace DatingApp.API
            (Configuration.GetConnectionString("DefaultConnection")));//services such as the DB context must be registered with the dependency injection (DI) container. 
             services.AddControllers();                                // The container provides the service to controllers.
             services.AddCors();
+            services.AddScoped<IAuthRepository,AuthRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
