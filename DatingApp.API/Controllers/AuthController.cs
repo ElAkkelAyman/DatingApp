@@ -1,8 +1,13 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using DatingApp.API.Data;
 using DatingApp.API.DTOs;
 using DatingApp.API.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DatingApp.API.Controllers
 {
@@ -11,9 +16,11 @@ namespace DatingApp.API.Controllers
     public class AuthController : ControllerBase
     { 
      private readonly IAuthRepository _repo;
-     public AuthController(IAuthRepository repo)
+     private readonly IConfiguration _conf;
+     public AuthController(IAuthRepository repo,IConfiguration conf)
     {
         this._repo=repo;
+        this._conf=conf;
     }
     [HttpPost("register")]
        public async Task<IActionResult> Register(UserForRegisterDto user)
@@ -30,11 +37,32 @@ namespace DatingApp.API.Controllers
             return StatusCode(201);
         }
 
-    [HttpGet("RegisterGet")]
-       public IActionResult RegisterGet(UserForRegisterDto user)
+      [HttpPost("login")]
+       public async Task<IActionResult> Login(UserForLoginDto usert)
         {
-            var values= "test values good";
-            return Ok(values);
+           var LoggedUser =  await _repo.Login(usert.UserName.ToLower(),usert.Password);
+           if(LoggedUser==null)
+            return Unauthorized();
+
+            var claims = new []
+            {
+                new Claim(ClaimTypes.NameIdentifier,LoggedUser.id.ToString()),
+                new Claim(ClaimTypes.Name,LoggedUser.UserName)
+            };
+           var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_conf.GetSection("AppSettings:Token").Value));
+
+           var cred = new SigningCredentials(key,SecurityAlgorithms.HmacSha512Signature);
+           var tokenDescriptor = new SecurityTokenDescriptor
+           {
+               Subject=new ClaimsIdentity(claims),
+               Expires= System.DateTime.Now.AddDays(1)
+           };
+           var tokenHandler = new JwtSecurityTokenHandler();
+           var token = tokenHandler.CreateToken(tokenDescriptor);
+
+           return Ok(new {
+              token = tokenHandler.WriteToken(token) 
+           });
         }
 
     }

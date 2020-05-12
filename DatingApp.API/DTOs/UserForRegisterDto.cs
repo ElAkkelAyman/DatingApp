@@ -4,10 +4,10 @@ namespace DatingApp.API.DTOs
 {
     public class UserForRegisterDto
     {
-        //[Required]
+        [Required]
         public string UserName { get; set; }
-        // [Required]
-        // [StringLength(8,MinimumLength=4 , ErrorMessage="You must specify password etween 4 and 8 characters")]
+         [Required]
+         [StringLength(8,MinimumLength=4 , ErrorMessage="You must specify password etween 4 and 8 characters")]
         public string Password { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace DatingApp.API.Controllers
         public async Task<IActionResult> GetValues()
         {
             //throw new Exception("test exception");
-            var values= await _context.Values.ToListAsync();
+            var values=  await _context.Values.ToListAsync();
             return Ok(values);
         }
 
