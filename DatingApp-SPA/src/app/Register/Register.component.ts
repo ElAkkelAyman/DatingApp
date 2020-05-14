@@ -24,7 +24,7 @@ model: any = {};
     console.log(this.model);
   }
   Cancel() {
-    this.cancelRegister.emit(false);
+    this.cancelRegister.emit();
     console.log('cancel register !');
   }
 
