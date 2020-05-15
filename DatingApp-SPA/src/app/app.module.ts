@@ -10,6 +10,11 @@ import { AuthService } from './_services/auth.service';
 import { RegisterComponent } from './Register/Register.component';
 import { HomeComponent } from './home/home.component';
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
+import { MemberListComponent } from './member-list/member-list.component';
+import { ListsComponent } from './lists/lists.component';
+import { MessagesComponent } from './messages/messages.component';
+import { RouterModule } from '@angular/router';
+import { appRoutes } from './routes';
 
 
 @NgModule({
@@ -17,16 +22,21 @@ import { ErrorInterceptorProvider } from './_services/error.interceptor';
       AppComponent,
       NavComponent,
       RegisterComponent,
-      HomeComponent
+      HomeComponent,
+      MemberListComponent,
+      ListsComponent,
+      MessagesComponent
    ],
    imports: [
 	 BrowserModule,
 	 HttpClientModule,
-    FormsModule,
-    BsDropdownModule.forRoot()
+	 FormsModule,
+    BsDropdownModule.forRoot(),
+    RouterModule.forRoot(appRoutes)
 	],
    providers: [
-      AuthService, ErrorInterceptorProvider
+      AuthService,
+     ErrorInterceptorProvider
    ],
    bootstrap: [
       AppComponent
