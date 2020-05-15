@@ -60,7 +60,7 @@ namespace DatingApp.API
             else 
             {
                 // Global Exception handler
-                app.UseExceptionHandler(builder => {
+                app.UseExceptionHandler(builder => {//The UseExceptionHandler middleware is a built-in middleware that we can use to handle exceptions in our ASP.NET Core Web API application
                 builder.Run(async context => {
                  context.Response.StatusCode=(int)HttpStatusCode.InternalServerError;
                  var error=context.Features.Get<IExceptionHandlerFeature>(); 
