@@ -27,13 +27,7 @@ import { appRoutes } from './routes';
       ListsComponent,
       MessagesComponent
    ],
-   imports: [
-	 BrowserModule,
-	 HttpClientModule,
-	 FormsModule,
-    BsDropdownModule.forRoot(),
-    RouterModule.forRoot(appRoutes)
-	],
+   imports: [BrowserModule, HttpClientModule, FormsModule, BsDropdownModule.forRoot(), RouterModule.forRoot(appRoutes)],
    providers: [
       AuthService,
      ErrorInterceptorProvider
