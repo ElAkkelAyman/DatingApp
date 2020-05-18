@@ -21,6 +21,10 @@ import { MemberCardComponent } from './members/member-card/member-card.component
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
 import { MemberDetailResolver } from './_resolvers/member-detail.resolver';
 import { NgxGalleryModule } from 'ngx-gallery-9'; import { hammerjs } from 'hammerjs';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
+import { MemberEditResolver } from './_resolvers/member-edit.resolver';
+import { AuthGuard } from './_guards/auth.guard';
+import { PreventUnsavedChanges } from './_guards/prevent-unaved-changes.guard';
 
 
 export function tokenGetterMeth() {
@@ -37,7 +41,8 @@ export function tokenGetterMeth() {
       ListsComponent,
       MessagesComponent,
       MemberCardComponent,
-      MemberDetailComponent
+      MemberDetailComponent,
+      MemberEditComponent
    ],
    imports: [BrowserModule, HttpClientModule,
       FormsModule, BsDropdownModule.forRoot(),
@@ -54,8 +59,8 @@ export function tokenGetterMeth() {
    ],
 
    providers: [
-      AuthService,
-     ErrorInterceptorProvider, MemberDetailResolver
+      AuthService, AuthGuard, PreventUnsavedChanges,
+     ErrorInterceptorProvider, MemberDetailResolver, MemberEditResolver
    ],
    bootstrap: [
       AppComponent

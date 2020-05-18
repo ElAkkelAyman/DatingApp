@@ -24,6 +24,7 @@ namespace DatingApp.API.Data
             _datacontext.Remove(entity);
         }
 
+
         public async Task<User> GetUser(int id)
         {
             var user = await _datacontext.Users.Include(p=>p.Photos).FirstOrDefaultAsync

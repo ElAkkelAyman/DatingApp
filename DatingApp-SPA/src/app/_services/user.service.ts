@@ -16,6 +16,7 @@ import { User } from '../_models/user';
 export class UserService {
  baseUrl = environment.apiUrl;
 
+
 constructor(private http: HttpClient) {
 
  }
@@ -24,6 +25,10 @@ constructor(private http: HttpClient) {
  }
  getUser(id: number): Observable<any>{
  return this.http.get<any>(this.baseUrl + 'users/' + id);
+ }
+
+ updateUser(id: number, user: any){
+  return this.http.put(this.baseUrl + 'users/' + id, user);
  }
 
 }
