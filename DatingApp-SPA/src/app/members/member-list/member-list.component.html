@@ -1,0 +1,9 @@
+<div class="container mt-5" >
+  <div class="row">
+    <!-- grid system in bootstrap -->
+    <div *ngFor="let userCard of users"class="col-lg-2 col-md-3 col-sm 6">
+        <app-member-card [user]="userCard"></app-member-card>
+    </div>
+
+  </div>
+</div> 

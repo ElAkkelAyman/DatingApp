@@ -41,8 +41,10 @@ namespace DatingApp.API
              opt.SerializerSettings.ReferenceLoopHandling=Newtonsoft.Json.ReferenceLoopHandling.Ignore);                                // The container provides the service to controllers.
             services.AddCors();
             services.AddAutoMapper(typeof(DatingRepository).Assembly);
+            // Repos
             services.AddScoped<IAuthRepository,AuthRepository>();
             services.AddScoped<IDatingRepository,DatingRepository>();
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer
             (Options => Options.TokenValidationParameters = new TokenValidationParameters
             {
