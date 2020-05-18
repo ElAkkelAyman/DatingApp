@@ -20,6 +20,7 @@ galleryImages: NgxGalleryImage[];
     this.route.data.subscribe( data => {
       this.user = data.user;
     });
+    
     this.galleryOptions = [
       {
         width: '500px',
