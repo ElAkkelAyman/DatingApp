@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -44,15 +45,20 @@ namespace DatingApp.API.Controllers
          [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id,UserForUpdateDto userForUpdate)
         {
+            try 
+        {
            if(id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
            return Unauthorized();
            var userFromepo =await _repo.GetUser(id);
            _mapper.Map(userForUpdate,userFromepo);
            if(await _repo.SaveAll())
            return NoContent();
-
-           throw new System.Exception("Updating user failled");
-
+        }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            return NoContent();
            
 
         }

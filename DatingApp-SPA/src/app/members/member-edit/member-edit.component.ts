@@ -37,4 +37,9 @@ user: any;
 
   }
 
+  SetMainPhoto(photoUrl)
+  {
+    this.user.photoUrl = photoUrl;
+  }
+
 }

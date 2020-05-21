@@ -38,6 +38,7 @@ model: any = {};
 
   logout() {
    localStorage.removeItem('token');
+   localStorage.removeItem('PhotoUrl');
    this.alertify.message('Logged out');
    this.router.navigate(['/home']);
   }

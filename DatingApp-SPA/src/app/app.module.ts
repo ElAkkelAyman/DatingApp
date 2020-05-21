@@ -25,6 +25,8 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { AuthGuard } from './_guards/auth.guard';
 import { PreventUnsavedChanges } from './_guards/prevent-unaved-changes.guard';
+import { PhotoEditorsComponent } from './members/photo-editors/photo-editors.component';
+import { FileUploadModule } from 'ng2-file-upload';
 
 
 export function tokenGetterMeth() {
@@ -42,13 +44,15 @@ export function tokenGetterMeth() {
       MessagesComponent,
       MemberCardComponent,
       MemberDetailComponent,
-      MemberEditComponent
+      MemberEditComponent,
+      PhotoEditorsComponent
    ],
    imports: [BrowserModule, HttpClientModule,
       FormsModule, BsDropdownModule.forRoot(),
-      NgxGalleryModule,
+      NgxGalleryModule, 
+      FileUploadModule,
        RouterModule.forRoot(appRoutes),
-      JwtModule.forRoot({
+      JwtModule.forRoot({ // send token automatically to the API server
        config : {
           tokenGetter: tokenGetterMeth,
           whitelistedDomains: ['localhost:5000'],

@@ -59,7 +59,7 @@
         
       </tab>
       <tab heading="Edit Photos">
-      <p>Photo edit will go here</p>
+        <app-photo-editors (SetMainPhotoEmiter)="SetMainPhoto($event)" [photos]="user.photos"></app-photo-editors>
       </tab>
     </tabset>
   

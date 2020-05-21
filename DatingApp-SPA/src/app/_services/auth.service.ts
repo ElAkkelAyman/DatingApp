@@ -11,6 +11,7 @@ export class AuthService {
   baseUrl = environment.apiUrl + 'auth/';
   jwtHelper = new JwtHelperService();
   decodedToken: any;
+  currentUerPhoto: any;
 
 constructor(private http: HttpClient) { }
 login(model: any){
@@ -21,7 +22,9 @@ login(model: any){
    if (user)
    {
      localStorage.setItem('token', user.tokenString);
+     localStorage.setItem('PhotoUrl', user.mainPhotoUrl);
      this.decodedToken = this.jwtHelper.decodeToken(user.tokenString);
+     this.currentUerPhoto = user.mainPhotoUrl;
      console.log(this.decodedToken);
    }
   })

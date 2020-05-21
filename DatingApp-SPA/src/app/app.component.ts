@@ -14,9 +14,13 @@ export class AppComponent implements OnInit {
   constructor(private authService: AuthService) {}
   ngOnInit() {
   const token = localStorage.getItem('token');
+  const PhotoMainUrl = localStorage.getItem('PhotoUrl');
   if (token)
   {
-this.authService.decodedToken = this.jwtHelper.decodeToken(token);
+   this.authService.decodedToken = this.jwtHelper.decodeToken(token);
+  }
+  if (PhotoMainUrl) {
+  this.authService.currentUerPhoto = PhotoMainUrl;
   }
   }
 }

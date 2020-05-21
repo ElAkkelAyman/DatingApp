@@ -20,6 +20,7 @@ using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using AutoMapper;
+using DatingApp.API.Helpers;
 
 namespace DatingApp.API
 {
@@ -40,6 +41,7 @@ namespace DatingApp.API
             services.AddControllers().AddNewtonsoftJson(opt =>
              opt.SerializerSettings.ReferenceLoopHandling=Newtonsoft.Json.ReferenceLoopHandling.Ignore);                                // The container provides the service to controllers.
             services.AddCors();
+            services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
             services.AddAutoMapper(typeof(DatingRepository).Assembly);
             // Repos
             services.AddScoped<IAuthRepository,AuthRepository>();
