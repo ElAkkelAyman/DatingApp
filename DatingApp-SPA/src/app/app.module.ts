@@ -27,7 +27,11 @@ import { AuthGuard } from './_guards/auth.guard';
 import { PreventUnsavedChanges } from './_guards/prevent-unaved-changes.guard';
 import { PhotoEditorsComponent } from './members/photo-editors/photo-editors.component';
 import { FileUploadModule } from 'ng2-file-upload';
-
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+// RECOMMENDED
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+// NOT RECOMMENDED (Angular 9 doesn't support this kind of import)
 
 export function tokenGetterMeth() {
    return localStorage.getItem('token');
@@ -45,11 +49,12 @@ export function tokenGetterMeth() {
       MemberCardComponent,
       MemberDetailComponent,
       MemberEditComponent,
-      PhotoEditorsComponent
+      PhotoEditorsComponent,
    ],
-   imports: [BrowserModule, HttpClientModule,
+   imports: [BrowserModule, HttpClientModule, BsDatepickerModule.forRoot(),
+      BrowserAnimationsModule,
       FormsModule, BsDropdownModule.forRoot(),
-      NgxGalleryModule, 
+      NgxGalleryModule, ReactiveFormsModule,
       FileUploadModule,
        RouterModule.forRoot(appRoutes),
       JwtModule.forRoot({ // send token automatically to the API server
