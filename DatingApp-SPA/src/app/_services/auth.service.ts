@@ -13,6 +13,7 @@ export class AuthService {
   decodedToken: any;
   currentUerPhoto: any;
 
+
 constructor(private http: HttpClient) { }
 login(model: any){
   return this.http.post(this.baseUrl + 'login', model)
@@ -22,9 +23,10 @@ login(model: any){
    if (user)
    {
      localStorage.setItem('token', user.tokenString);
-     localStorage.setItem('PhotoUrl', user.mainPhotoUrl);
+     localStorage.setItem('PhotoUrl', user.userToReturn.photoUrl);
+     localStorage.setItem('user', JSON.stringify(user.userToReturn));
      this.decodedToken = this.jwtHelper.decodeToken(user.tokenString);
-     this.currentUerPhoto = user.mainPhotoUrl;
+     this.currentUerPhoto = user.userToReturn.photoUrl;
      console.log(this.decodedToken);
    }
   })

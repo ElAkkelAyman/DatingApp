@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Pipe } from '@angular/core';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import {HttpClientModule} from '@angular/common/http';
@@ -29,6 +29,12 @@ import { PhotoEditorsComponent } from './members/photo-editors/photo-editors.com
 import { FileUploadModule } from 'ng2-file-upload';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
+
+
+// import { TimeAgoExtendsPipe } from './TimeAgo';
+
 // RECOMMENDED
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 // NOT RECOMMENDED (Angular 9 doesn't support this kind of import)
@@ -36,6 +42,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 export function tokenGetterMeth() {
    return localStorage.getItem('token');
 }
+
 
 @NgModule({
    declarations: [
@@ -50,10 +57,12 @@ export function tokenGetterMeth() {
       MemberDetailComponent,
       MemberEditComponent,
       PhotoEditorsComponent,
+
+
    ],
    imports: [BrowserModule, HttpClientModule, BsDatepickerModule.forRoot(),
       BrowserAnimationsModule,
-      FormsModule, BsDropdownModule.forRoot(),
+      FormsModule, BsDropdownModule.forRoot(),PaginationModule.forRoot(),ButtonsModule.forRoot(),
       NgxGalleryModule, ReactiveFormsModule,
       FileUploadModule,
        RouterModule.forRoot(appRoutes),

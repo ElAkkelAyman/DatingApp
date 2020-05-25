@@ -65,13 +65,9 @@ namespace DatingApp.API.Controllers
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
-            string MainPhotoUrl="";
-            if(userFromRepo.Photos.Any())
-            {
-             MainPhotoUrl = userFromRepo.Photos.Where(p => p.IsMain).FirstOrDefault().Url;
-            } 
+            var userToReturn = _mapper.Map<UserForDetailsDto>(userFromRepo);
 
-            return Ok(new { tokenString, MainPhotoUrl });
+            return Ok(new { tokenString, userToReturn });
         }
 
     }

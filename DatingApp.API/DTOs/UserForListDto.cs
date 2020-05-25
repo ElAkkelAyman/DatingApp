@@ -4,7 +4,11 @@ namespace DatingApp.API.DTOs
 {
     public class UserForListDto
     {
-         public int id { get; set; }
+        public UserForListDto()
+        {
+        }
+
+        public int id { get; set; }
         public string UserName { get; set; }
 
         public string Gender { get; set; }
