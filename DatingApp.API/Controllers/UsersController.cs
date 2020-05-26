@@ -36,7 +36,7 @@ namespace DatingApp.API.Controllers
             userparams.Gender = CurrentUserFromRepo.Gender == "male" ? "female" : "male";
             var users= await _repo.GetUsers(userparams);
             var UserstoReturn=_mapper.Map<List<UserForListDto>>(users);
-            Response.AddPagination(users.CurrentPage,users.PageSize,users.TotalCount,users.TotalPages);
+           // Response.AddPagination(users.CurrentPage,users.PageSize,users.TotalCount,users.TotalPages);
             var PaginationBody = new PaginaionHeader(users.CurrentPage,users.PageSize,users.TotalCount,users.TotalPages);
             return Ok( new {UserstoReturn ,PaginationBody });
         }
@@ -50,7 +50,7 @@ namespace DatingApp.API.Controllers
             return Ok(UsertoReturn); 
         }
 
-         [HttpPut("{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id,UserForUpdateDto userForUpdate)
         {
             try 
@@ -70,6 +70,29 @@ namespace DatingApp.API.Controllers
            
 
         }
+        [HttpPost("{id}/like/{recipientId}")]
+        public async Task<IActionResult> LikeUser(int id,int recipientId)
+        {
+           if(id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+           return Unauthorized();
+           var like = await _repo.GetLike(id,recipientId);
+           if(like != null)
+           return BadRequest("you already liked this user");
+           if(await _repo.GetUser(recipientId) == null)
+           return NotFound();
+           var Like = new Like {
+           LikerId = id,
+           LikeeId=recipientId            
+           };
+           _repo.Add(Like);
+           if(await _repo.SaveAll())
+           return Ok("you liked the user");
+           else 
+           return BadRequest("Failed to like user");
+
+        }
+
+
 
 
     }
