@@ -101,5 +101,39 @@ namespace DatingApp.API.Data
         {
             return await _datacontext.SaveChangesAsync() > 0;
         }
+
+        public async Task<Message> GetMessage(int id)
+        {
+            return await _datacontext.Messages.FirstOrDefaultAsync(m => m.Id == id);
+        }
+
+
+        public async Task<IEnumerable<Message>> GetMessageThread(int userId, int recipientId)
+        {
+            return await  _datacontext.Messages.Include( u => u.Sender).ThenInclude( p => p.Photos)
+                         .Include(u => u.Recipient).ThenInclude ( p => p.Photos).AsQueryable()
+                         .Where(m => m.RecipientId==recipientId && m.SenderDelated ==false && m.SenderId==userId 
+                         || m.RecipientId==userId && m.RecipientDelated ==false && m.SenderId==recipientId).OrderByDescending(m => m.MessageSent).ToListAsync();
+
+        }
+
+        public async Task<PagedList<Message>> GetMessageForUser(MessageParams messageParams)
+        {
+          var messages = _datacontext.Messages.Include( u => u.Sender).ThenInclude( p => p.Photos)
+                         .Include(u => u.Recipient).ThenInclude ( p => p.Photos).AsQueryable();
+
+          switch(messageParams.MessageContainer) 
+          {
+              case "Inbox" : messages=messages.Where(m => m.RecipientId == messageParams.UserId && m.RecipientDelated == false ) ;
+              break;
+              case "Outbox": messages=messages.Where(m => m.SenderId == messageParams.UserId && m.SenderDelated == false);
+              break;
+              default : messages=messages.Where(m => m.RecipientId == messageParams.UserId && m.RecipientDelated == false && m.IsRead == false);
+              break;
+
+          }
+          messages=messages.OrderByDescending(d => d.MessageSent);
+          return await PagedList<Message>.CreateAsync(messages, messageParams.PageNumber, messageParams.PageSize);              
+        }
     }
 }

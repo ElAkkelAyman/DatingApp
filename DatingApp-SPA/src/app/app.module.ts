@@ -37,6 +37,8 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 // RECOMMENDED
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { MessagesResolver } from './_resolvers/messages.resolver';
+import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
 // NOT RECOMMENDED (Angular 9 doesn't support this kind of import)
 
 export function tokenGetterMeth() {
@@ -57,6 +59,7 @@ export function tokenGetterMeth() {
       MemberDetailComponent,
       MemberEditComponent,
       PhotoEditorsComponent,
+      MemberMessagesComponent
 
 
    ],
@@ -78,7 +81,7 @@ export function tokenGetterMeth() {
 
    providers: [
       AuthService, AuthGuard, PreventUnsavedChanges,
-     ErrorInterceptorProvider, MemberDetailResolver, MemberEditResolver
+     ErrorInterceptorProvider, MemberDetailResolver, MemberEditResolver , MessagesResolver
    ],
    bootstrap: [
       AppComponent

@@ -81,4 +81,44 @@ SendLike(userId: number , recipientId: number)
   return this.http.post(this.baseUrl + 'users/' + userId + '/like/' + recipientId,  {}); // http://localhost:5000/api/users/2/like/9
  }
 
+ getMessages(userId: number, page? , itemsPerPage?, messageContainer?)
+ : Observable<PaginatedResult<any[]>> {
+   const paginatedResult: PaginatedResult<any[]> = new PaginatedResult<any[]>();
+   let params = new HttpParams();
+   params = params.append('MessageContainer', messageContainer);
+   if (page != null && itemsPerPage != null)
+   {
+     params = params.append('pageNumber', page);
+     params = params.append('pageSize', itemsPerPage);
+
+     return this.http.get<any>(this.baseUrl + 'users/' + userId + '/messages/' , {observe : 'response', params})
+     .pipe(
+      map(response => {
+       paginatedResult.result = response.body.messages;
+       paginatedResult.pagination = response.body.pagiantionInfo;
+
+       return paginatedResult;
+      })
+     );
+   }
+ }
+
+ getMessageThread(userId: number , recipientId: number)
+ {
+   return this.http.get<any>(this.baseUrl + 'users/' + userId + '/messages/thread/' + recipientId);
+ }
+
+ sendMessage(id: number , message: any)
+ {
+   return this.http.post(this.baseUrl + 'users/' + id + '/messages' , message);
+ }
+
+ deleteMessage(UserId: number , messageId: number){
+  return this.http.post(this.baseUrl + 'users/' + UserId + '/messages/' + messageId , {})
+ }
+
+ markAsRead(UserId: number , messageId: number) {
+  return this.http.post(this.baseUrl + 'users/' + UserId + '/messages/' + messageId + '/read',{})
+  .subscribe(); 
+ }
 }
