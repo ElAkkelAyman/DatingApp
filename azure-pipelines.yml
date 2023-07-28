@@ -28,3 +28,12 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'sonar_sv'
+    organization: 'az400prep'
+    scannerMode: 'MSBuild'
+    projectKey: 'az400prep_test-prj'
+- task: SonarCloudAnalyze@1
+  inputs:
+    jdkversion: 'JAVA_HOME_11_X64'
